@@ -2,7 +2,7 @@
 
 You can use the [editor on GitHub](https://github.com/markravinet/markravinet.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
-This is a quick [test to see if you can access the exercises](https://github.com/markravinet/EVOP2017/blob/master/exercise_1_reference.md)
+This is a quick [test to see if you can access the exercises](https://github.com/markravinet/markravinet.github.io/blob/master/exercise_1_reference.md)
 
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
