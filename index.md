@@ -1,40 +1,17 @@
-## Welcome to GitHub Pages
+# Welcome to my github repository
 
-You can use the [editor on GitHub](https://github.com/markravinet/markravinet.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+I am an evolutionary biologist based at the Centre for Ecological and Evolutionary Synthesis at the University of Oslo, Norway. I work on evolutionary, speciation and population genomics. You can find a bit more about me [here](http://www.mn.uio.no/cees/english/people/researcher-postdoc/msravine/) and see some of my work [here](https://scholar.google.co.uk/citations?user=GfpvKBwAAAAJ&hl=en&oi=ao).
 
-This is a quick [test to see if you can access the exercises](exercise_1_reference.md)
+## EVOP 2017 exercises
+
+The exercises I wrote for NGS for non-model organisms module of the 2017 [Programming for Evolutionary Biology course in Leipzig](http://evop.bioinf.uni-leipzig.de/?page_id=7), Germany are available here.
+
+- [Reference-mapped RAD analysis with sticklebacks](exercise_1_reference.md)
+- [_denovo_ assembly RAD analaysis with cichlids](exercise_2_denovo.md)
+
+## Slightly less serious
+
+I would highly, highly recommend [this](http://musicforprogramming.net/) as a way to break through the drudgery of coding.
 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/markravinet/markravinet.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
