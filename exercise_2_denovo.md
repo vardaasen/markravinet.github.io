@@ -4,7 +4,7 @@
 
 As you are no doubt aware by now, the morning session was lengthy and had a lot to take on board! Now that we are all more familiar with how referenced-based RAD-seq works, hopefully this next exercise will be a bit more straightforward. 
 
-Our aim for this exercise is to do exactly the same as we did before - call variants from a RAD-seq dataset. Unlike before we will not map to a reference genome. Instead we will perform a _denovo_ assembly using the Stacks pipeline before calling SNPs and then outputting the data for genomic analysis. Like before, we will generate _F_~ST~ estimates for our variants and if time allows, we will also use a method to detect selection.
+Our aim for this exercise is to do exactly the same as we did before - call variants from a RAD-seq dataset. Unlike before we will not map to a reference genome. Instead we will perform a _denovo_ assembly using the Stacks pipeline before calling SNPs and then outputting the data for genomic analysis. Like before, we will generate _F_<sub>ST</sub> estimates for our variants and if time allows, we will also use a method to detect selection.
 
 For this analysis, we are going to work on a Nicuagaran cichlid species - _Amphilophus_ from a single site in a Nicuagaran crater lake. There are two species in this analysis, the thick lipped _A labiatus_ and the ancestral _A citronellus_. Our aim is to find SNPs under divergent selection between them.
 
@@ -27,7 +27,7 @@ Next make a directory for the raw data and copy the data into it.
 
 	mkdir raw 
 	cd raw
-	cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/raw/* ./
+	cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/raw_10k/* ./
 	
 Like before, have a look at the data. How many individuals are there for each species? Can you remember what each line in the fastq format represents?
 

@@ -2,7 +2,7 @@
 
 ### Introduction
 
-For the first session today, we will try our hand at analysing RAD data when we have reference genome available. First we will map our data to the reference genome, then we will call SNPs, perform some simple filtering and quality checking steps before plotting genome-wide _F_~ST~ estimates.
+For the first session today, we will try our hand at analysing RAD data when we have reference genome available. First we will map our data to the reference genome, then we will call SNPs, perform some simple filtering and quality checking steps before plotting genome-wide _F_<sub>ST</sub> estimates.
 
 We are going to be working on double-digested RAD seq data from a Canadian population of three-spined sticklebacks (_Gasterosteus aculeatus_). The Little Campbell stream is famous in stickleback evolutionary biology because it is one of the first places that marine and freshwater stickleback morphs were explained in detail (Hagen & McPhail 1967). 
 
@@ -29,7 +29,7 @@ Once you are logged in, familiarise yourself with your surroundings. You should 
 
 Before we can actually do any analysis, we are going to need to get some data. Typically for an analysis like this, you will recieve sequencing data as a large [fastq](https://en.wikipedia.org/wiki/FASTQ_format) file which you need to demultiplex (i.e. breakdown into files for separate individuals). For the sake of convenience today, all have already been demultiplexed and quality checked, so we can get started straight away. Let's have a look at the data.
 
-	cd /homes/evopserver/lectures/NGS-NonModelOrganism/ref/raw_100k
+	cd /homes/evopserver/lectures/NGS-NonModelOrganism/ref/raw_10k
 	ls
 	
 You should see a big list of files that all end with **fastq.gz**. These are gzipped fastq files - raw sequencing data for each individual in the study. Use the following command to take a closer look at the first individual:
@@ -76,7 +76,7 @@ The final step here is to copy these files to your home directory. Use the follo
 cd ~/ref_rad
 mkdir raw
 cp /homes/evopserver/lectures/NGS-NonModelOrganism\
-/ref/raw_100k/*fastq.gz ./raw/
+/ref/raw_10k/*fastq.gz ./raw/
 ```
 
 ---
@@ -201,7 +201,7 @@ Rather than typing out each command, we can use a bash script. For ease today, I
 ```
 cd ~/ref_rad
 cp /homes/evopserver/lectures/NGS-NonModelOrganism\
-/ref/scripts/align_sort.sh
+/ref/scripts/align_sort.sh ./
 less align_sort.sh
 ```
 
@@ -275,7 +275,7 @@ After performing the pileup, we than pass the output to `bcftools call` which wi
 Rather than perform each step previously as we did before, here we will use pipes - `|` - to pass data from each part of the pipeline to the next. Rather than explaining every point now, it's best we just perform the calling and break it down later.
 
 	cd ~/ref_rad/
-	samtools mpileup -Rug -t DP,DV -C 50 -f $REF \
+	samtools mpileup -Rug -t DP,AD -C 50 -f $REF \
 	./align/*_sort.bam | bcftools call -f GQ,GP \
 	-vmO z -o ./stickleback.vcf.gz
 	
@@ -337,7 +337,7 @@ Let's see what variants are present at the start of chrIV:
 	
 Here the `-r` flag specfies the region of the genome to examine. We can achieve the same effect by specifying the base pair coordinates
 
-	bcftools view -H -r chrIV:1-10000 stickleback.vcf.gz
+	bcftools view -H -r chrIV:100000-200000 stickleback.vcf.gz
 	
 Now you're probably wondering what exactly all this data actually means. Let's explore in a bit more detail.
 
@@ -368,10 +368,10 @@ You should see this:
 
 ```
 #CHROM	POS	ID	REF	ALT	QUAL	FILTER
-chrI	6258	.	C	A	87	.
+chrI	187111	.	C	A	159	.
 ```
 
-Which means we have a variant at 6258 on chr1. The reference base is C, alternate base is A. There are no filters.
+Which means we have a variant at 187111 on chr1. The reference base is C, alternate base is A. There are no filters.
 
 Have a look at the info field with the following code
 
@@ -405,7 +405,7 @@ This will return:
 
 ```
 ./align/LCM10_sort.bam
-0/1:0,3,42:1:0:4,1,40:4
+1/1:36,3,0:1:0,1:41,3,2:3
 ```
 
 The first line is obviously the name of the sample, then we have the genotype. Here `0` always denotes the reference, `1` the alternate base so we can see this individual is heterozygote for the `REF` and `ALT` bases. We will ignore the genotype likelhood for now. You can see there is 1 read in total covering this site and no reads for the variant - meaning this genotype call is obviously wrong.
@@ -492,7 +492,7 @@ Have a closer look at the vcf before moving on to the next step to get an idea o
 
 ### 5. Estimating population genomic statistics
 
-Now we are finally at the stage that many of you will want to reach with your own organisms - performing population genomic analyses. Here we will carry out a simple analysis - estimating  genome-wide _F_~ST~ from our RAD_seq data. 
+Now we are finally at the stage that many of you will want to reach with your own organisms - performing population genomic analyses. Here we will carry out a simple analysis - estimating  genome-wide _F_<sub>ST</sub> from our RAD_seq data. 
 
 #### Getting sample lists
 
@@ -500,13 +500,13 @@ Once again we will use `vcftools`. Before we can perform this analysis though we
 
 ```
 cd ~/rad_ref/vcf/
-cp homes/evopserver/lectures/NGS-NonModelOrganism/ref/other/L* ./
+cp /homes/evopserver/lectures/NGS-NonModelOrganism/ref/other/L* ./
 cat L*
 ```
 	
 You should now see a list of samples. One of these files `LCS_samples.txt` is a list of individuals from the Little Campbell stream, the other, `LCM_samples.txt` is for Little Campbell marine fish.
 
-#### Estimating per-site _F_~ST~
+#### Estimating per-site _F_<sub>ST</sub>
 
 Now we have a list of samples for each population, we can perform _F_~ST~ estimates. First we will do this on a site by site basis. 
 
@@ -523,11 +523,11 @@ This analysis is extremely quick. Let's look at the output.
 
 	head full_site.weir.fst
 	
-You can see now that there are _F_~ST~ estimates for each site in our vcf file.
+You can see now that there are _F_<sub>ST</sub> estimates for each site in our vcf file.
 
-#### Estimating sliding window _F_~ST~
+#### Estimating sliding window _F_<sub>ST</sub>
 
-One big feature of working with genomic data is the **huge** number of sites you need to deal with. Plotting >4000 SNPs can be very noisy (as you will see shortly) so it is often easier to perform sliding window estimates of  _F_~ST~ - i.e. _F_~ST~ averaged over a set genome-window. Here we will use 250 kb non-overlapping windows.
+One big feature of working with genomic data is the **huge** number of sites you need to deal with. Plotting >4000 SNPs can be very noisy (as you will see shortly) so it is often easier to perform sliding window estimates of  _F_<sub>ST</sub> - i.e. _F_<sub>ST</sub> averaged over a set genome-window. Here we will use 250 kb non-overlapping windows.
 
 ```
 vcftools --gzvcf stickleback_full_filtered.vcf.gz \
@@ -568,7 +568,10 @@ Rscript fst_plotter.R -s full_site.weir.fst \
 -w full_site.windowed.weir.fst -o fst_plot.pdf
 ```
 
-If you want to know more about the options, run `Rscript fst_plotter.R -h`. This should produce a nice genome-wide _F_~ST~ plot as a pdf for you to look at. Again, feel free to look at the mechanics of the `fst_plotter.R` script using `less` or `nano`. I'm happy to answer questions on it for those interested.
+If you want to know more about the options, run `Rscript fst_plotter.R -h`. This should produce a nice genome-wide _F_<sub>ST</sub> plot as a pdf for you to look at. Again, feel free to look at the mechanics of the `fst_plotter.R` script using `less` or `nano`. I'm happy to answer questions on it for those interested.
+
+So that's it for the first exercise! If you would like to learn more about the study system we looked at here, you can find out more in the two papers by [Kusukabe _et al._ (2016)](http://onlinelibrary.wiley.com/doi/10.1111/mec.13875/full) and [Ishikawa _et al._ (2017)](http://onlinelibrary.wiley.com/doi/10.1111/evo.13175/abstract) where this data was actually used!
+
 
 ---
 
