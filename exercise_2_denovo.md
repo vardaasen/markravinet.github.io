@@ -63,7 +63,7 @@ Since there are so many options and it is very easy to make a mistake typing the
 Before running this script, you will also need a 'map' of the population samples - i.e. identifying which population is which. More on this later.
 	
 	cd ~/denovo_rad
-	cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo\other/cichlid.popmap
+	cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/other/cichlid.popmap ./
 	
 Take a quick look at this using `cat`. You will see it is a tab-delimited file with the sample name and population assignment (species in this case).
 
@@ -146,7 +146,7 @@ Note that if you run an analysis without SQL interaction (like we have here) you
 Check your stacks run using `screen -R stacks` - is it done yet? If you have had problems running the analysis, you can copy the output of the pipeline into your stacks directory like so:
 
 	cd ~/denovo_rad/stacks
-	cp homes/evopserver/lectures/NGS-NonModelOrganism/denovo/stacks/* ./
+	cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/stacks/* ./
 	
 Use `ls -lah` to have a look at what is available here. Firstly you'll see a series of files that start with `batch_1`. These are the batch files produced by the catalogue.
 
@@ -170,6 +170,7 @@ The `populations` module allows us to filter the dataset based on the samples/lo
 Run populations like so:
 
 ```
+cd ~/denovo_rad/
 populations -b 1 -P ./stacks -M cichlid.popmap -t 4 \
 -r 0.75 -p 2 -m 5 --fstats --vcf --genepop
 ```
@@ -188,6 +189,8 @@ With the reduced dataset, this should run quite quickly. As you will see from lo
 * `--genepop` - output genepop format
 
 **NB: Stacks can output a wide-range formats - i.e. Structure, Phylip - for now though we only need these formats.**
+
+Another point that is worth making - Stacks is well maintained and is continually updated. A lot of new features for outputing data in various different formats have been added since this tutorial was first put together and new features are being added all the time. Be sure to check the different options [on the pipeline website](http://catchenlab.life.illinois.edu/stacks/comp/populations.php)
 
 Now we have run the _denovo_ Stacks pipeline in full. The next step is to look at this data in more detail.
 
@@ -213,11 +216,11 @@ Before actually looking into this data in great detail, let's just get a sense o
 * `cichlid.sumstats_summary.tsv`- this is a summary of the summary statistics across all loci output by the pipeline. Useful for getting a general idea of what the data is showing. Here we can see there are 4929 private variants within _A. labiatus_ for instance.
 * `cichlid.sumstats.tsv` - a more detailed version of the previous file. This is the summary statistics per site (**per variant not per locus**). Note that because we required loci to occur in both populations, there should be two rows for each locus in this file.
 * `cichlid.hapstats.tsv` - similar to the previous file but now based on RAD loci, not SNPs.
-* `cichlid.phistats.tsv` - Phi statistics for haplotype based analyses - these are analogous to _F_~ST~ for the entire locus.
+* `cichlid.phistats.tsv` - Phi statistics for haplotype based analyses - these are analogous to _F_<sub>ST</sub> for the entire locus.
 * `cichlid.haplotypes.tsv` - This is a matrix of haplotypes for each individual - this can be used for downstream analyses if necessary.
 * `cichlid.genepop` - a genepop file generated from RAD data.
 * `cichlid.fst_summary.tsv` - a summary file giving mean pairwise _F_~ST~. Here there is only one value because we are only comparing two populations.
-* `cichlid.fst_citrinellus-labiatus.tsv ` - pairwise _F_~ST~ for each SNP site. One pairwise file is generated for each population in the analysis, since there are only two populations in this analysis, we have only a single file.
+* `cichlid.fst_citrinellus-labiatus.tsv ` - pairwise _F_<sub>ST</sub> for each SNP site. One pairwise file is generated for each population in the analysis, since there are only two populations in this analysis, we have only a single file.
 * `cichlid.phistats_citrinellus-labiatus.tsv` - as above but for Phi instead of _F_~ST~. In this case only a single file and also Phi values should be identical to those in `cichlid.phistats.tsv`.
 * `cichlid.populations.log` - a log of the populations run - useful for understanding why certain loci are dropped from the analysis. For example, the first part of this file shows the distribution of loci with a specific number of samples. You can see clearly that 891189 loci are missing samples (i.e. most probably removed after Stacks validity checks), the majority of loci also occur in only a single individual (249788 in this case).
 
@@ -240,7 +243,7 @@ What about variants? We can use the vcf file for this. Ignore the `bcftools` war
 ```
 bcftools view -H cichlid.vcf | wc -l
 ```
-We have over >25 000 SNPs, which means we have ~1.4 SNPs per RAD locus. It is important to remember that RAD loci often have multiple SNPs and that these will be in linkage. This can have some serious repercussions for downstream analyses like detecting selection. One way to overcome this is to use RAD locus haplotypes instead of SNPs or alternatively to randomly select a single SNP from each locus. 
+You will get a warning when you do this, but you can ignore it. More importantly, we have over >25 000 SNPs, which means we have ~1.4 SNPs per RAD locus. It is important to remember that RAD loci often have multiple SNPs and that these will be in linkage. This can have some serious repercussions for downstream analyses like detecting selection. One way to overcome this is to use RAD locus haplotypes instead of SNPs or alternatively to randomly select a single SNP from each locus. 
 
 We could do this manually in the vcf or we could rerun `populations` with either the `--write_single_snp` or `--write_random_snp` options. The first of these	write the first SNP occurring on a haplotype while the second will randomly select one. For the rest of this exercise though, we will proceed with the data as it is.
 
@@ -248,7 +251,7 @@ We could do this manually in the vcf or we could rerun `populations` with either
 
 One issue you will have no doubt already realised is that it can be very difficult to really get an idea of how to get a handle on this amount of data. This is why it is really very useful to be able to plot your data properly.
 
-If you have time, try plotting some of the data in `R` to get a feel for it. For instance, the distribution of _F_~ST~ or Phi statistics may be useful. The easiest way to do this will be download the files to your local machine (we can show you how to do this in the class).
+If you have time, try plotting some of the data in `R` to get a feel for it. For instance, the distribution of _F_<sub>ST</sub> or Phi statistics may be useful. The easiest way to do this will be download the files to your local machine (we can show you how to do this in the class).
 
 I have written an interactive `R` script for you to use locally. Unlike before, this will need a bit more input from you. Play around with it and don't be afraid to ask for help if you need it.
 
@@ -261,12 +264,74 @@ scripts/plotting_RAD_data.R
 
 ---
 
+### 4. Identifying population structure using PCA
 
-### 4. Detecting selection using Bayescan
+Now that we have generated our population genomic data, one thing we can do is look for any population structuring. For example, we might expect some divergence between the two _Amphilophus_ species.
 
-We saw in the last section that Stacks produced some population genomic analyses on our behalf. But what if we want to go further than this and identify whether any of the SNP loci we identified are under divergent selection between these two morphs?
+A quick and straightforward way to investigate this is to use [Principal Components Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) on allele frequencies. This will essentially tease apart the main axes of divergence between samples, based on allele frequency differences. 
 
-There are several different approaches we can take to achieve this but today we are going to use `Bayescan`, [a Bayesian method](http://cmpg.unibe.ch/software/BayeScan/) for that decomposes _F_~ST~ into 'local and global effects.
+There are lots of ways to perform PCA, but one of the simplest is using the `R` package `adegenet` which is [a versatile tool for population genomics](http://adegenet.r-forge.r-project.org/).
+
+However before we can make use of `adegenet` we need to convert our data into a different format using `plink` which is [another really useful tool for genomic data](https://www.cog-genomics.org/plink2/). **NB:** `plink` actually has it's own PCA tool but today I want you to use the `adegenet` version to expose you to as many tools as possible.
+
+#### Converting to plink raw format
+
+First things first, we need to convert our `cichlid.vcf` into a binary. To do so, run the following command:
+
+```
+plink --vcf cichlid.vcf --double-id --allow-extra-chr --recodeA
+```
+
+Note that since `plink` was originally written for human data, it can sometimes be a little fiddly to run. Let's break these command down:
+
+* `--vcf` - specifies our input file is a vcf
+* `--double-id` - the just tells plink to ignore the sample names in the vcf header; the program tries to assign samples to families and pedigrees and all this does is to tell it to use each name twice for that.
+* `--allow-extra-chr` - tells `plink` to ignore the chromosome configuration in the vcf. Since this is denovo, we actually don't have any chromosomes (they are listed as `Un` for unknown) but otherwise, `plink` would expect 23 chromosomes, as in humans.
+* `--recodeA` - this is the most important command as it tells `plink` how to recode the data into a new format. We need a raw output with an additive component (i.e. 0 for homozygote for the first allele, 1 for heterozygote and 2 for homozygote for the second allele)
+
+Take a look in the directory using `ls`, you should see three files; `plink.log`, `plink.nosex` and `plink.raw`. Move out of the directory and create a pca directory, then move these files into it. Like so:
+
+```
+cd ..
+mkdir pca
+mv results/plink.* pca
+cd pca
+```
+
+The next step is to perform a PCA on these files! Just in case this step didn't work for any reason, you can get the plink files like so:
+
+```
+cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/plink/* ./
+```
+
+
+#### Performing PCA with adegenet
+
+Creating the PCA is quite straightforward and luckily, like most good tools, `adegenet` is very well documented. In fact, there are a series of [tutorials online](https://github.com/thibautjombart/adegenet/wiki/Tutorials) which show you how to perform most of the major analyses, including PCA. 
+
+Because of that and also because of time constraints we will use a custom R script to make our PCA today. But again, feel free to look at the script in detail. First of all, let's get the script:
+
+```
+cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/scripts/make_pca_plot.R ./
+```
+
+Now run it. If you want to know what the commands do, use `--help`
+
+```
+Rscript make_pca_plot.R -i plink.raw -o pca_plot.pdf
+```
+
+Take a look at the PCA plot you've created. Can you see anything odd about it? Firstly you can see there is a good chance that one of the *A. labiatus* individuals has been mislabelled. Secondly, it seems like the main axis of differentiation between the species is well, not really between the species at all. In fact there are two clear outliers - this suggests there may be an error in the data. PCA is quite sensitive to missing data, so this can often be a good way to diagnose issues. 
+
+---
+
+
+
+### 5. Detecting selection using Bayescan
+
+We saw in the section before last that Stacks produced some population genomic analyses on our behalf. But what if we want to go further than this and identify whether any of the SNP loci we identified are under divergent selection between these two morphs?
+
+There are several different approaches we can take to achieve this but today we are going to use `Bayescan`, [a Bayesian method](http://cmpg.unibe.ch/software/BayeScan/) for that decomposes _F_<sub>ST</sub> into 'local and global effects.
 
 One immediate issue we have is that Stacks does not output the format required to use `Bayescan`. Not to worry - we can produce one! The easiest way to do this is using a SNP matrix generated with the `vcftools` `perl`utility.
 
@@ -287,7 +352,7 @@ As before, feel free to look at this script to see what it is doing. The exact m
 Now we are ready to run Bayescan! Run the following line, as before I'll break it down afterwards.
 
 ```
-Bayescan2.1 ./cichlid_bayes.txt -o cichlid_bayes_run \
+BayeScan2.1_linux64bits ./cichlid_bayes.txt -o cichlid_bayes_run \
 -threads 4 -n 5000 -thin 10 -nbp 20 -pilot 5000 \
 -burn 50000 -pr_odds 10 
 ```
@@ -305,23 +370,20 @@ What do we have here?
 Chances are that this will take far too long to run in the class so you can copy some finished results here:
 
 ```
-cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/bayes/* ./
+cp -r /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/outlier/bayes/ ./
 ```
 
-Have a look at the output. The main one we are interested in is `cichlid_bayes_run_fst.txt` which is the _F_~ST~ estimate for each locus. The qval in this file is the posterior proability, corrected for false positives that a locus is under selection.
+Note that here, the `-r` flag for `cp` means copy recursively - so it will copy the entire directory. Enter the directory you just copied and have a look at the output. The main one we are interested in is `cichlid_bayes_run_fst.txt` which is the _F_<sub>ST</sub> estimate for each locus. The qval in this file is the posterior proability, corrected for false positives that a locus is under selection.
 
 As with most of these analyses, the easiest way to understand the output is to plot it. Again, I have written an `R` script to do this for you. Use the following code:
 
 ```
 cp /homes/evopserver/lectures/NGS-NonModelOrganism/denovo/\
-scripts/Bayes_plot.R
-Rscript Bayes_plot.R -i cichlid_bayes_run_fst.txt -o `Cichlid_bayes_plot.pdf`
+scripts/Bayes_plot.R ./
+
+Rscript Bayes_plot.R -i cichlid_bayes_run_fst.txt -o Cichlid_bayes_plot.pdf
 ```
 Have a look at the plot and the output of the `R` script to the screen. How many loci are under selection? **Tip:** The dashed vertical line represents our cut-off threshold for determining whether a locus is under selection. 
-
-###PS...###
-
-[In the unlikely event you were wondering...](https://youtu.be/Cu-ihs4BkAs)
 
 ---
 
