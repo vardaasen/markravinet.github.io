@@ -386,6 +386,15 @@ Rscript Bayes_plot.R -i cichlid_bayes_run_fst.txt -o Cichlid_bayes_plot.pdf
 Have a look at the plot and the output of the `R` script to the screen. How many loci are under selection? **Tip:** The dashed vertical line represents our cut-off threshold for determining whether a locus is under selection. 
 
 ---
+<<<<<<< HEAD
+=======
+
+
+
+##PS...##
+
+[In the unlikely event you were wondering...](https://youtu.be/Cu-ihs4BkAs)
+>>>>>>> origin/master
 
 
 
