@@ -9,6 +9,10 @@ The exercises I wrote for NGS for non-model organisms module of the 2017 [Progra
 - [Reference-mapped RAD analysis with sticklebacks](exercise_1_reference.md)
 - [_denovo_ assembly RAD analaysis with cichlids](exercise_2_denovo.md)
 
+## CEES Pop Genomics workshop
+
+Some pointers for tips and tricks are available [here](CEES_tips_&_tricks.md)
+
 ## Slightly less serious
 
 I would highly, highly recommend [this](http://musicforprogramming.net/) as a way to break through the drudgery of coding.
