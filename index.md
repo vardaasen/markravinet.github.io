@@ -13,6 +13,8 @@ The exercises I wrote for NGS for non-model organisms module of the 2017 [Progra
 
 Some pointers for tips and tricks are available [here](CEES_tips_&_tricks.md)
 
+A guide to setting thresholds for GATK filters is [here](https://markravinet.github.io/sparrow_SNP_thresholds.html)
+
 ## Slightly less serious
 
 I would highly, highly recommend [this](http://musicforprogramming.net/) as a way to break through the drudgery of coding.
