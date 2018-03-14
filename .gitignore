@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+nintendo.csv
+markdown/Introduction_Feb2018.html
+.DS_Store

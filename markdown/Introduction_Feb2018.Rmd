@@ -1,7 +1,8 @@
 ---
 title: "Getting down to basics: an introduction to the fundamentals of R"
 output:
-  html_document: default
+  html_document:
+    fig_caption: yes
   pdf_document: default
   word_document: default
 ---
@@ -19,21 +20,27 @@ In this section we are going to:
 
 For modern evolutionary biologists, handling large amounts of data is a fundamental skill. Familiarity with a programming language, particularly one that makes it straightforward to visualise, explore and filter data is the best way to achieve this ability. There are many different types of programming and scripting languages; the entire concept may seem daunting at first, especially if you have never encountered it before. This is natural, many other biologists applying scripting tools on a daily basis have started from similar first principles. A little patience with the basics of any form of programming and you will soon be able to do much more than you thought possible. 
 
-For this section, we will be introducing you to R, a statistical programming language and environment that is widely used in the biological sciences. R is flexible, clear and easy to learn. It also extremely good for producing quick, high quality visualisations of data, which makes it very useful for anyone trying to explore their data. Perhaps the greatest strength of R is its focus on statistics - this makes it an excellent tool for carrying out and learning statistical analysis. R is also used for data analysis beyond evolutionary biology - it forms the basis of data science for companies such as Google, Facebook and Twitter, among many others. If you find yourself wondering why you are learning a programming language, it is worth remembering this point - familiarity with R an scripting will provide you with a very flexible and useful skill.
+For this section, we will be introducing you to R, a statistical programming language and environment that is widely used in the biological sciences. R is flexible, clear and easy to learn. It is also extremely good for quickly producing high quality visualisations of data, which makes it very useful for anyone trying to explore their data. Perhaps the greatest strength of R is its focus on statistics - this makes it an excellent tool for carrying out and learning statistical analysis. R is also used for data analysis beyond evolutionary biology - it forms the basis of data science for companies such as Google, Facebook and Twitter, among many others. If you find yourself wondering why you are learning a programming language, it is worth remembering this point - familiarity with R and scripting will provide you with a very flexible and useful skill.
 
-We believe the best way to get an idea of what R is and what it is capable of is to dive straight in. There really is no better way to learn and understand than to demonstrate the workings of the language to yourself. As a brief overview, we will show the utmost basics here before moving onto more advanced topics in the next chapter. We will also introduce some basic statistical concepts for which R makes visualisation and understanding straightforward. Together these first two chapters will form the foundations for applying R to more evolutionary genetics focused questions. 
+We believe the best way to get a feel for what R is and what it is capable of is to dive straight in. There really is no better way to learn and understand than to demonstrate the workings of the language to yourself. As a brief overview, we will show the basics here, before moving onto more advanced topics in the next chapter. We will also introduce some basic statistical concepts for which R makes visualisation and understanding of straightforward. Together these first two chapters will form the foundations for applying R to the more evolutionary genetics focused questions in later chapters. 
 
 ## Getting set up 
 
 To begin, you should download and install R from the [CRAN](https://cran.r-project.org/). This is the online hub for the R language and it stands for Comprehensive R Archive Network. Be sure to download the correct R installation for your operating system. 
 
-We also strongly recommend you install [RStudio](https://www.rstudio.com/), a front-end for R. This utility makes working in the R environment a lot more straightforward, standardises things across operating systems and has many helpful features. For the purposes of these tutorials, we will assume you are using RStudio.
+We also strongly recommend you install [RStudio](https://www.rstudio.com/), an integrated development environment (IDE) for R. This IDE makes working in the R environment a lot more straightforward, standardises things across operating systems and has helpful features, including tools for organising projects, building web applications, and generating reproducible reports, among many more. For the purposes of these tutorials, we will assume you are using RStudio.
 
 With both R and RStudio installed, start Rstudio and we will begin! 
 
 ## Familiarising yourself with the R environment
 
-Now RStudio is loaded, you should see three panels, the console, a panel called environment and one with at least four tabs labelled files, plots, packages and help. 
+Now RStudio is loaded, you should see something like that shown in the screen-capture below:
+
+![_Fig 1: rstudio IDE layout_](rstudio_layout.png)
+
+<br>
+
+Don't worry if your screen panels are not in the same position as those shown here, or your colour scheme is different. These are fully customisable features of rstudio, and you should have a play around to create a setup that suits your own preferences.
 
 With R, you type commands into the console and then this replies with output. R will operate from within the directory it is started from. This is an important point to remember for later but for now, we will settle with using a single function in order to find out which directory we are in and also get an idea of how this all actually works. In the console, simply type the following:
 
@@ -544,7 +551,7 @@ This works if we have only a few observations or a few variables - but could you
 To demonstrate this, we will read in a simple test dataset that you can get [here](https://markravinet.github.io/sonic_data.csv). Download the data and place it somewhere easily accessible. To make the next few steps straightforward, use the function `getwd` to identify where on your computer the R environment is running and place the file in the same directory. Once you have done that, use the following code to read in the data.
 
 ```{r, eval = TRUE, results = "true"}
-df2 <- read.csv("./sonic_data.csv", header = T)
+df2 <- read.csv("../sonic_data.csv", header = T)
 df2
 ```
 
